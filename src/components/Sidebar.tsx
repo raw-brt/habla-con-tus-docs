@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { fetcher } from '../utils/fetcher';
 import clsx from 'clsx';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -45,26 +45,23 @@ export const Sidebar: FC<Props> = ({
         throw new Error();
       } else {
         // Return response ordered alphabetically
-        response.result.sort((a: string, b: string) => {
-          if (a < b) {
-            return -1;
-          } else if (a > b) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-
-        console.log("response", response)
+        // response.result.sort((a: string, b: string) => {
+        //   if (a < b) {
+        //     return -1;
+        //   } else if (a > b) {
+        //     return 1;
+        //   } else {
+        //     return 0;
+        //   }
+        // });
 
         return response;
       }
     },
     {
       onSuccess: (data) => {
-        console.log("data", data)
         if (data.result) {
-          queryClient.invalidateQueries(['namespaces']);
+          queryClient.invalidateQueries({ queryKey: ['namespaces'] });
           setSelectedNamespace(null);
         }
       },

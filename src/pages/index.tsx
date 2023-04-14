@@ -179,16 +179,16 @@ export default function Home() {
   return (
     <>
       <Layout>
-        <div className="flex flex-col justify-start items-center">
+        <div className="flex flex-col justify-start items-center w-full mx-4">
           <h1 className="text-2xl font-bold text-center my-10">
             💬 Habla con tus docs 📑
           </h1>
-          <main className="w-full h-full flex justify-center items-start space-x-4">
+          <main className="w-full h-full flex justify-center items-start space-x-4 max-w-5xl">
             <Sidebar
               selectedNamespace={selectedNamespace}
               setSelectedNamespace={setSelectedNamespace}
             />
-            <div className="flex flex-col justify-between items-center w-auto max-w-4xl">
+            <div className="flex flex-col w-full justify-between items-center max-w-4xl">
               <div className="w-full h-[65vh] bg-slate-50 rounded border border-slate-200 flex justify-center items-center">
                 <div
                   ref={messageListRef}
@@ -225,7 +225,7 @@ export default function Home() {
                       className =
                         loading && index === chatMessages.length - 1
                           ? 'flex justify-start p-12 text-neutral-900 bg-slate-100 flex justify-start items-center animate-pulse w-full'
-                          : 'bg-slate-50 p-12 text-neutral-900 flex justify-start items-center';
+                          : 'bg-slate-50 p-12 text-neutral-900 flex justify-start items-center w-full';
                     }
                     return (
                       <>
@@ -273,8 +273,8 @@ export default function Home() {
                   {sourceDocs.length > 0 && <Source sourceDocs={sourceDocs} />}
                 </div>
               </div>
-              <div className="flex flex-col justify-center items-center relative py-10 max-w-4xl">
-                <div className="relative">
+              <div className="flex flex-col w-full justify-center items-center relative py-10 max-w-4xl">
+                <div className="relative w-full">
                   <form onSubmit={handleSubmit}>
                     <textarea
                       disabled={loading || !selectedNamespace}
@@ -292,7 +292,7 @@ export default function Home() {
                       }
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
-                      className="relative resize-none text-xl py-5 px-10 w-[65vw] rounded-lg border bg-slate-50 text-neutral-900 outline-none disabled:opacity-50 focus:ring-slate-400"
+                      className="relative w-full resize-none text-xl py-5 px-10 w-[65vw] rounded-lg border bg-slate-50 text-neutral-900 outline-none disabled:opacity-50 focus:ring-slate-400"
                     />
                     <button
                       type="submit"
