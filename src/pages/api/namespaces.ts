@@ -9,7 +9,6 @@ export default async function handler(req: NextApiRequest,
         describeIndexStatsRequest: {},
       })
   
-  
       if (indexStats && !indexStats.namespaces ) {
         return res.json("No namespaces found");
       } else if (indexStats && indexStats.namespaces) {

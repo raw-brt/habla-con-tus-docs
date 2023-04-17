@@ -20,7 +20,11 @@ export const Sidebar: FC<Props> = ({
     ['namespaces'],
     async () => {
       const response = await fetcher('/api/namespaces');
-      return response;
+      
+      // Order namespaces alphabetically
+      const orderedResponse = response.sort();
+
+      return orderedResponse;
     },
     {
       onSuccess: (data) => {
@@ -44,17 +48,6 @@ export const Sidebar: FC<Props> = ({
       if (response.error || response.result === false) {
         throw new Error();
       } else {
-        // Return response ordered alphabetically
-        // response.result.sort((a: string, b: string) => {
-        //   if (a < b) {
-        //     return -1;
-        //   } else if (a > b) {
-        //     return 1;
-        //   } else {
-        //     return 0;
-        //   }
-        // });
-
         return response;
       }
     },
@@ -125,12 +118,14 @@ export const Sidebar: FC<Props> = ({
             </p>
           </div>
         ))}
-        <button
-          className="absolute bottom-0 left-0 w-full h-12 bg-slate-400 hover:bg-slate-500 text-white font-bold"
-          onClick={() => handleClear()}
-        >
-          Eliminar documentos
-        </button>
+        <div className="absolute bottom-0 left-0 w-full h-16 flex justify-center items-center mb-4">
+          <button
+            className="w-fit h-12 bg-slate-400 hover:bg-slate-500 text-white font-bold rounded-lg px-4 py-2"
+            onClick={() => handleClear()}
+          >
+            Eliminar
+          </button>
+        </div>
       </div>
     );
   }

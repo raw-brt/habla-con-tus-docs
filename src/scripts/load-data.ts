@@ -2,9 +2,9 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { OpenAIEmbeddings } from 'langchain/embeddings';
 import { PineconeStore } from 'langchain/vectorstores';
 import { DirectoryLoader } from 'langchain/document_loaders';
-import { CustomPDFLoader } from '../utils/customPDFLoader';
 import { pinecone } from '../utils/pinecone-client';
 import { PINECONE_INDEX_NAME } from '../config/pinecone';
+import { PdfLoader } from '../utils/pdfLoader';
 
 /* Name of directory to retrieve your files from */
 const filePath = 'docs';
@@ -13,7 +13,7 @@ export const run = async () => {
   try {
     /*load raw docs from docs directory */
     const directoryLoader = new DirectoryLoader(filePath, {
-      '.pdf': (path) => new CustomPDFLoader(path),
+      '.pdf': (path) => new PdfLoader(path),
     });
 
     const rawDocs = await directoryLoader.load();
@@ -33,13 +33,14 @@ export const run = async () => {
       return fileNameExtractedNoExtension;
     });
 
+    console.log("Documentos que se van a subir: ", fileNamesExtractedNoExtension);
+
     /* Text splitter*/
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 1000,
       chunkOverlap: 200,
     });
     const docs = await textSplitter.splitDocuments(rawDocs);
-    console.log("Documentos que se van a subir: ", fileNamesExtractedNoExtension);
 
     console.log("Troceando ficheros...")
 
@@ -62,7 +63,7 @@ export const run = async () => {
     });
   } catch (error) {
     console.log('error', error);
-    throw new Error('Failed to ingest your data');
+    throw new Error('La carga de datos ha fallado. Por favor, inténtalo de nuevo.');
   }
 };
 

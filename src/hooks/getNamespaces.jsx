@@ -9,8 +9,7 @@ export const useGetIndexNamespaces = async () => {
     const indexStats = await index.describeIndexStats({
       describeIndexStatsRequest: {},
     })
-  
-    console.log("Indexstats", indexStats)
+
 
     if (indexStats && indexStats.namespaces) {
       setNamespaces(indexStats.namespaces)
